@@ -106,36 +106,36 @@ class Register extends Action
     public function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
-        $data = $this->getRequest()->getParams();
-        $this->_helperBlog->setCustomerContextId();
+        // $data = $this->getRequest()->getParams();
+        // $this->_helperBlog->setCustomerContextId();
 
-        if (!$this->_helperBlog->isEnabledAuthor()) {
+        // if (!$this->_helperBlog->isEnabledAuthor()) {
             $resultRedirect->setPath('customer/account');
 
-            return $resultRedirect;
-        }
+            // return $resultRedirect;
+        // }
 
-        if ($data) {
-            if ($this->_helperBlog->isAuthor()) {
-                $data = $this->prepareData($data);
-                $author = $this->author->create()->addData($data);
-                $notify = __('Register Successful');
-            } else {
-                $author = $this->_helperBlog->getCurrentAuthor();
-                $data = $this->prepareData($data, $author);
-                $author->addData($data);
-                $notify = __('Author Edited Successful');
-            }
+        // if ($data) {
+        //     if ($this->_helperBlog->isAuthor()) {
+        //         $data = $this->prepareData($data);
+        //         $author = $this->author->create()->addData($data);
+        //         $notify = __('Register Successful');
+        //     } else {
+        //         $author = $this->_helperBlog->getCurrentAuthor();
+        //         $data = $this->prepareData($data, $author);
+        //         $author->addData($data);
+        //         $notify = __('Author Edited Successful');
+        //     }
 
-            try {
-                $author->save();
-                $resultRedirect->setPath('mpblog/*/information');
-                $this->messageManager->addSuccessMessage($notify);
-            } catch (Exception $e) {
-                $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the Author.'));
-                $resultRedirect->setPath('mpblog/*/signup');
-            }
-        }
+        //     try {
+        //         $author->save();
+        //         $resultRedirect->setPath('mpblog/*/information');
+        //         $this->messageManager->addSuccessMessage($notify);
+        //     } catch (Exception $e) {
+        //         $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the Author.'));
+        //         $resultRedirect->setPath('mpblog/*/signup');
+        //     }
+        // }
 
         return $resultRedirect;
     }
@@ -146,28 +146,28 @@ class Register extends Action
      *
      * @return mixed
      */
-    public function prepareData($data, $author = null)
-    {
-        if ($author) {
-            unset($data['status']);
-        } else {
-            $data['customer_id'] = $this->customerSession->getId();
-            $data['type'] = '1';
-            $data['status'] = $this->_helperBlog->getConfigGeneral('auto_approve');
-        }
+    // public function prepareData($data, $author = null)
+    // {
+    //     if ($author) {
+    //         unset($data['status']);
+    //     } else {
+    //         $data['customer_id'] = $this->customerSession->getId();
+    //         $data['type'] = '1';
+    //         $data['status'] = $this->_helperBlog->getConfigGeneral('auto_approve');
+    //     }
 
-        if ($this->getRequest()->getFiles()['image']['size'] > 0) {
-            try {
-                $this->imageHelper->uploadImage($data, 'image', Image::TEMPLATE_MEDIA_TYPE_AUTH);
-            } catch (Exception $exception) {
-                $data['image'] = isset($data['image']['value']) ? $data['image']['value'] : '';
-            }
-        }
+    //     if ($this->getRequest()->getFiles()['image']['size'] > 0) {
+    //         try {
+    //             $this->imageHelper->uploadImage($data, 'image', Image::TEMPLATE_MEDIA_TYPE_AUTH);
+    //         } catch (Exception $exception) {
+    //             $data['image'] = isset($data['image']['value']) ? $data['image']['value'] : '';
+    //         }
+    //     }
 
-        if (isset($data['image']['delete'])) {
-            $data['image'] = '';
-        }
+    //     if (isset($data['image']['delete'])) {
+    //         $data['image'] = '';
+    //     }
 
-        return $data;
-    }
+    //     return $data;
+    // }
 }

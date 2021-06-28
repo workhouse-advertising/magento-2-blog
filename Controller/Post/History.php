@@ -107,31 +107,31 @@ class History extends Action
     public function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
-        $this->_helperBlog->setCustomerContextId();
+        // $this->_helperBlog->setCustomerContextId();
 
-        if (!$this->_helperBlog->isEnabledAuthor()) {
+        // if (!$this->_helperBlog->isEnabledAuthor()) {
+        //     $resultRedirect->setPath('customer/account');
+
+        //     return $resultRedirect;
+        // }
+
+        // if (!$this->_helperBlog->isAuthor()) {
+        //     $author = $this->_helperBlog->getCurrentAuthor();
+
+        //     $this->coreRegistry->register('mp_author', $author);
+
+        //     $page = $this->resultPageFactory->create();
+        //     $page->getConfig()->setPageLayout(SideBarLR::LEFT);
+        //     $page->getConfig()->getTitle()->set($author->getName());
+
+        //     return $page;
+        // }
+
+        // if ($this->_helperBlog->isLogin()) {
+        //     $resultRedirect->setPath('mpblog/*/signup');
+        // } else {
             $resultRedirect->setPath('customer/account');
-
-            return $resultRedirect;
-        }
-
-        if (!$this->_helperBlog->isAuthor()) {
-            $author = $this->_helperBlog->getCurrentAuthor();
-
-            $this->coreRegistry->register('mp_author', $author);
-
-            $page = $this->resultPageFactory->create();
-            $page->getConfig()->setPageLayout(SideBarLR::LEFT);
-            $page->getConfig()->getTitle()->set($author->getName());
-
-            return $page;
-        }
-
-        if ($this->_helperBlog->isLogin()) {
-            $resultRedirect->setPath('mpblog/*/signup');
-        } else {
-            $resultRedirect->setPath('customer/account');
-        }
+        // }
 
         return $resultRedirect;
     }

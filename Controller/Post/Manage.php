@@ -133,77 +133,79 @@ class Manage extends Action
      */
     public function execute()
     {
-        $data = $this->getRequest()->getParams();
-        $this->_helperBlog->setCustomerContextId();
-        $author = $this->_helperBlog->getCurrentAuthor();
-        $post = $this->postFactory->create();
+        // $data = $this->getRequest()->getParams();
+        // $this->_helperBlog->setCustomerContextId();
+        // $author = $this->_helperBlog->getCurrentAuthor();
+        // $post = $this->postFactory->create();
 
-        if (!$author) {
-            return null;
-        }
+        // if (!$author) {
+        //     return null;
+        // }
 
-        if ($this->getRequest()->getFiles('image')['size'] > 0) {
-            try {
-                $this->imageHelper->uploadImage($data, 'image', Image::TEMPLATE_MEDIA_TYPE_POST, $post->getImage());
-            } catch (Exception $exception) {
-                $data['image'] = isset($data['image']['value']) ? $data['image']['value'] : '';
-            }
-        }
+        // if ($this->getRequest()->getFiles('image')['size'] > 0) {
+        //     try {
+        //         $this->imageHelper->uploadImage($data, 'image', Image::TEMPLATE_MEDIA_TYPE_POST, $post->getImage());
+        //     } catch (Exception $exception) {
+        //         $data['image'] = isset($data['image']['value']) ? $data['image']['value'] : '';
+        //     }
+        // }
 
-        if (isset($data['image']['delete']) || (isset($data['image']) && $data['image'] === 'null')) {
-            $data['image'] = '';
-        }
+        // if (isset($data['image']['delete']) || (isset($data['image']) && $data['image'] === 'null')) {
+        //     $data['image'] = '';
+        // }
 
-        $data['categories_ids'] = (isset($data['categories_ids']) && $data['categories_ids']) ? explode(
-            ',',
-            $data['categories_ids']
-        ) : [];
-        $data['tags_ids'] = (isset($data['tags_ids']) && $data['tags_ids'])
-            ? explode(',', $data['tags_ids']) : [];
-        $data['topics_ids'] = (isset($data['topics_ids']) && $data['topics_ids']) ? explode(
-            ',',
-            $data['topics_ids']
-        ) : [];
+        // $data['categories_ids'] = (isset($data['categories_ids']) && $data['categories_ids']) ? explode(
+        //     ',',
+        //     $data['categories_ids']
+        // ) : [];
+        // $data['tags_ids'] = (isset($data['tags_ids']) && $data['tags_ids'])
+        //     ? explode(',', $data['tags_ids']) : [];
+        // $data['topics_ids'] = (isset($data['topics_ids']) && $data['topics_ids']) ? explode(
+        //     ',',
+        //     $data['topics_ids']
+        // ) : [];
 
-        $data['author_id'] = $author->getId();
+        // $data['author_id'] = $author->getId();
 
-        $data['store_ids'] = $this->_helperBlog->getCurrentStoreId();
+        // $data['store_ids'] = $this->_helperBlog->getCurrentStoreId();
 
-        $data['enabled'] = $this->_helperBlog->getConfigGeneral('auto_post') ? 1 : 0;
+        // $data['enabled'] = $this->_helperBlog->getConfigGeneral('auto_post') ? 1 : 0;
 
-        $data['in_rss'] = '0';
+        // $data['in_rss'] = '0';
 
-        $data['meta_robots'] = 'INDEX,FOLLOW';
+        // $data['meta_robots'] = 'INDEX,FOLLOW';
 
-        $data['layout'] = 'empty';
+        // $data['layout'] = 'empty';
 
-        $data['publish_date'] = !empty($data['publish_date']) ? $data['publish_date'] : $this->date->date();
+        // $data['publish_date'] = !empty($data['publish_date']) ? $data['publish_date'] : $this->date->date();
 
-        if ($data['post_id']) {
-            $post->load($data['post_id']);
-            if ($post->getId()) {
-                $post->setData($data);
-            }
-            $data['updated_at'] = $this->date->date();
-        } else {
-            unset($data['post_id']);
-            $data['created_at'] = $this->date->date();
-            $post->setData($data);
-        }
+        // if ($data['post_id']) {
+        //     $post->load($data['post_id']);
+        //     if ($post->getId()) {
+        //         $post->setData($data);
+        //     }
+        //     $data['updated_at'] = $this->date->date();
+        // } else {
+        //     unset($data['post_id']);
+        //     $data['created_at'] = $this->date->date();
+        //     $post->setData($data);
+        // }
 
-        try {
-            $post->save();
-            $this->messageManager->addSuccessMessage(__('The post has been saved.'));
+        // try {
+        //     $post->save();
+        //     $this->messageManager->addSuccessMessage(__('The post has been saved.'));
 
-            return $this->getResponse()->representJson(Data::jsonEncode([
-                'status' => 1
-            ]));
-        } catch (Exception $exception) {
-            $this->messageManager->addErrorMessage($exception->getMessage());
+        //     return $this->getResponse()->representJson(Data::jsonEncode([
+        //         'status' => 1
+        //     ]));
+        // } catch (Exception $exception) {
+        //     $this->messageManager->addErrorMessage($exception->getMessage());
 
-            return $this->getResponse()->representJson(Data::jsonEncode([
-                'status' => 0
-            ]));
-        }
+        //     return $this->getResponse()->representJson(Data::jsonEncode([
+        //         'status' => 0
+        //     ]));
+        // }
+
+        return $this->_redirect('noroute');
     }
 }

@@ -38,10 +38,12 @@ class AddPost extends Action
      */
     public function execute()
     {
-        $resultRedirect = $this->resultRedirectFactory->create();
+        // $resultRedirect = $this->resultRedirectFactory->create();
 
-        $resultRedirect->setPath('mpblog/*/editpost');
+        // $resultRedirect->setPath('mpblog/*/editpost');
 
-        return $resultRedirect;
+        // return $resultRedirect;
+
+        return $this->_redirect('noroute');
     }
 }

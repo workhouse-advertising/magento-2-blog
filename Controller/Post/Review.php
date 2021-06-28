@@ -88,75 +88,77 @@ class Review extends Action
      */
     public function execute()
     {
-        $id = $this->getRequest()->getParam('post_id');
-        $action = $this->getRequest()->getParam('action');
-        $mode = $this->getRequest()->getParam('mode');
-        $likeId = $this->getRequest()->getParam('likeId');
-        $customerId = $this->_helperBlog->getCurrentUser() ?: 0;
-        $post = $this->postFactory->create()->load($id);
+        // $id = $this->getRequest()->getParam('post_id');
+        // $action = $this->getRequest()->getParam('action');
+        // $mode = $this->getRequest()->getParam('mode');
+        // $likeId = $this->getRequest()->getParam('likeId');
+        // $customerId = $this->_helperBlog->getCurrentUser() ?: 0;
+        // $post = $this->postFactory->create()->load($id);
 
-        if ($mode === '1') {
-            $like = $this->_postLikeCollection->addFieldToFilter('entity_id', $customerId)
-                ->addFieldToFilter('post_id', $post->getId());
-            $likeId = $like->getFirstItem()->getId();
+        // if ($mode === '1') {
+        //     $like = $this->_postLikeCollection->addFieldToFilter('entity_id', $customerId)
+        //         ->addFieldToFilter('post_id', $post->getId());
+        //     $likeId = $like->getFirstItem()->getId();
 
-            if ($action === '3') {
-                return $this->getResponse()->representJson(Data::jsonEncode([
-                    'status' => $like->count() > 0 ? 0 : 1,
-                    'action' => $like->getFirstItem()->getAction(),
-                    'type' => $action
-                ]));
-            }
+        //     if ($action === '3') {
+        //         return $this->getResponse()->representJson(Data::jsonEncode([
+        //             'status' => $like->count() > 0 ? 0 : 1,
+        //             'action' => $like->getFirstItem()->getAction(),
+        //             'type' => $action
+        //         ]));
+        //     }
 
-            if (!$customerId || !$post) {
-                if ($action === '1') {
-                    $this->messageManager->addErrorMessage(__('Can\'t Like Post.'));
-                } else {
-                    $this->messageManager->addErrorMessage(__('Can\'t Dislike Post.'));
-                }
+        //     if (!$customerId || !$post) {
+        //         if ($action === '1') {
+        //             $this->messageManager->addErrorMessage(__('Can\'t Like Post.'));
+        //         } else {
+        //             $this->messageManager->addErrorMessage(__('Can\'t Dislike Post.'));
+        //         }
 
-                return $this->getResponse()->representJson(Data::jsonEncode([
-                    'status' => 0,
-                    'type' => $action
-                ]));
-            }
-        }
+        //         return $this->getResponse()->representJson(Data::jsonEncode([
+        //             'status' => 0,
+        //             'type' => $action
+        //         ]));
+        //     }
+        // }
 
-        try {
-            $postLike = $this->_postLike->create()->load($likeId);
+        // try {
+        //     $postLike = $this->_postLike->create()->load($likeId);
 
-            if ($postLike->getId() && $postLike->getAction() === $action) {
-                $postLike->delete();
-                $postLike->setId(0);
-            } else {
-                $postLike->addData(
-                    [
-                        'post_id' => $post->getId(),
-                        'action' => $action,
-                        'entity_id' => $customerId
-                    ]
-                )->save();
-            }
+        //     if ($postLike->getId() && $postLike->getAction() === $action) {
+        //         $postLike->delete();
+        //         $postLike->setId(0);
+        //     } else {
+        //         $postLike->addData(
+        //             [
+        //                 'post_id' => $post->getId(),
+        //                 'action' => $action,
+        //                 'entity_id' => $customerId
+        //             ]
+        //         )->save();
+        //     }
 
-            $sumLike = $this->_postLike->create()->getCollection()->addFieldToFilter('action', '1')
-                ->addFieldToFilter('post_id', $id);
-            $sumDislike = $this->_postLike->create()->getCollection()->addFieldToFilter('action', '0')
-                ->addFieldToFilter('post_id', $id);
+        //     $sumLike = $this->_postLike->create()->getCollection()->addFieldToFilter('action', '1')
+        //         ->addFieldToFilter('post_id', $id);
+        //     $sumDislike = $this->_postLike->create()->getCollection()->addFieldToFilter('action', '0')
+        //         ->addFieldToFilter('post_id', $id);
 
-            return $this->getResponse()->representJson(Data::jsonEncode([
-                'status' => 1,
-                'type' => $action,
-                'sumLike' => $sumLike->count(),
-                'sumDislike' => $sumDislike->count(),
-                'postLike' => $postLike->getId()
-            ]));
-        } catch (Exception $exception) {
-            $this->messageManager->addErrorMessage($exception->getMessage());
+        //     return $this->getResponse()->representJson(Data::jsonEncode([
+        //         'status' => 1,
+        //         'type' => $action,
+        //         'sumLike' => $sumLike->count(),
+        //         'sumDislike' => $sumDislike->count(),
+        //         'postLike' => $postLike->getId()
+        //     ]));
+        // } catch (Exception $exception) {
+        //     $this->messageManager->addErrorMessage($exception->getMessage());
 
-            return $this->getResponse()->representJson(Data::jsonEncode([
-                'status' => 0,
-                'type' => $action
-            ]));
-        }
+        //     return $this->getResponse()->representJson(Data::jsonEncode([
+        //         'status' => 0,
+        //         'type' => $action
+        //     ]));
+        // }
+
+        return $this->_redirect('noroute');
     }
 }

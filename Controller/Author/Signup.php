@@ -80,29 +80,29 @@ class Signup extends Action
     public function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
-        $this->_helperBlog->setCustomerContextId();
+        // $this->_helperBlog->setCustomerContextId();
 
-        if (!$this->_helperBlog->isEnabled()
-            || !$this->_helperBlog->isEnabledAuthor()
-            || ($this->_helperBlog->isAuthor() && !$this->_helperBlog->getConfigGeneral('customer_approve'))) {
+        // if (!$this->_helperBlog->isEnabled()
+        //     || !$this->_helperBlog->isEnabledAuthor()
+        //     || ($this->_helperBlog->isAuthor() && !$this->_helperBlog->getConfigGeneral('customer_approve'))) {
+        //     $resultRedirect->setPath('customer/account');
+
+        //     return $resultRedirect;
+        // }
+
+        // if ($this->_helperBlog->isAuthor()) {
+        //     $page = $this->resultPageFactory->create();
+        //     $page->getConfig()->setPageLayout(SideBarLR::LEFT);
+        //     $page->getConfig()->getTitle()->set('Signup Author');
+
+        //     return $page;
+        // }
+
+        // if ($this->_helperBlog->isLogin()) {
+        //     $resultRedirect->setPath('mpblog/*/information');
+        // } else {
             $resultRedirect->setPath('customer/account');
-
-            return $resultRedirect;
-        }
-
-        if ($this->_helperBlog->isAuthor()) {
-            $page = $this->resultPageFactory->create();
-            $page->getConfig()->setPageLayout(SideBarLR::LEFT);
-            $page->getConfig()->getTitle()->set('Signup Author');
-
-            return $page;
-        }
-
-        if ($this->_helperBlog->isLogin()) {
-            $resultRedirect->setPath('mpblog/*/information');
-        } else {
-            $resultRedirect->setPath('customer/account');
-        }
+        // }
 
         return $resultRedirect;
     }

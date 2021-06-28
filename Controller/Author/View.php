@@ -77,12 +77,14 @@ class View extends Action
      */
     public function execute()
     {
-        $id = $this->getRequest()->getParam('id');
-        $page = $this->resultPageFactory->create();
-        $page->getConfig()->setPageLayout($this->_helperBlog->getSidebarLayout());
+        // $id = $this->getRequest()->getParam('id');
+        // $page = $this->resultPageFactory->create();
+        // $page->getConfig()->setPageLayout($this->_helperBlog->getSidebarLayout());
 
-        return ($id)
-            ? $page
-            : $this->_redirect('noroute');
+        // return ($id)
+        //     ? $page
+        //     : $this->_redirect('noroute');
+
+        return $this->_redirect('noroute');
     }
 }

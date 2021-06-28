@@ -74,29 +74,31 @@ class DeletePost extends Action
      */
     public function execute()
     {
-        $postId = $this->getRequest()->getParam('post_id');
-        $this->_helperBlog->setCustomerContextId();
-        $author = $this->_helperBlog->getCurrentAuthor();
-        $post = $this->postFactory->create();
+        // $postId = $this->getRequest()->getParam('post_id');
+        // $this->_helperBlog->setCustomerContextId();
+        // $author = $this->_helperBlog->getCurrentAuthor();
+        // $post = $this->postFactory->create();
 
-        if (!$author || !$postId) {
-            return null;
-        }
+        // if (!$author || !$postId) {
+        //     return null;
+        // }
 
-        try {
-            $post->load($postId)->delete();
-            $this->messageManager->addSuccessMessage(__('The post has been deleted.'));
+        // try {
+        //     $post->load($postId)->delete();
+        //     $this->messageManager->addSuccessMessage(__('The post has been deleted.'));
 
-            return $this->getResponse()->representJson(Data::jsonEncode([
-                'status' => 1,
-                'post_id' => $postId
-            ]));
-        } catch (Exception $exception) {
-            $this->messageManager->addErrorMessage($exception->getMessage());
+        //     return $this->getResponse()->representJson(Data::jsonEncode([
+        //         'status' => 1,
+        //         'post_id' => $postId
+        //     ]));
+        // } catch (Exception $exception) {
+        //     $this->messageManager->addErrorMessage($exception->getMessage());
 
-            return $this->getResponse()->representJson(Data::jsonEncode([
-                'status' => 0
-            ]));
-        }
+        //     return $this->getResponse()->representJson(Data::jsonEncode([
+        //         'status' => 0
+        //     ]));
+        // }
+
+        return $this->_redirect('noroute');
     }
 }
